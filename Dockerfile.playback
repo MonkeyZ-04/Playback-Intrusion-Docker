@@ -1,0 +1,33 @@
+FROM jrottenberg/ffmpeg:4.3-ubuntu
+
+# Set environment variables to configure time zone non-interactively
+ENV TZ=Etc/UTC
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install necessary packages
+RUN apt-get update && apt-get install -y \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    libgeos-dev \
+    git \
+    python3 \
+    python3-pip \
+    software-properties-common \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the requirements file and install Python dependencies
+COPY requirements.txt /app/
+RUN pip3 install --no-cache-dir -r /app/requirements.txt
+
+# Copy the application code and environment files
+COPY . /app/
+
+# Ensure the system's ffmpeg is in the path
+ENV PATH="/usr/local/bin/ffmpeg:${PATH}"
+
+# Set the entrypoint and default command
+ENTRYPOINT ["python3", "intrusion_playback_clean.py"]
