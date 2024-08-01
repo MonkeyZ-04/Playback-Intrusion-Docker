@@ -59,7 +59,7 @@ ENTRYPOINT ["python", "mqtt_queue_clean.py"]
 
 ```
 ## Used
- 1. **Open Docker Desktop**: Ensure Docker Desktop is running on your machine.
+ 1. **Open `Docker Desktop`**: Ensure Docker Desktop is running on your machine.
 
  2. **Run `build_docker.bat`**: Double-click the build_docker.bat file. On the first run, it will create a docker-compose.yml file related to the env folder and build the Docker containers. If it's not the first time, the script will stop the running containers and down them before rebuilding them.
 ```bash
